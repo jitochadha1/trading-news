@@ -5,8 +5,8 @@
 var getNews = function () {
     let userInput = document.querySelector('#symbol').value;
     fetch(`https://stocknewsapi.com/api/v1?tickers=${userInput}&items=50&token=tvqftcxiwedbpjfxkixyqylbrjwvx3cjeoqmuvj8`)
-    .then(response => response.json())
-    .then(data => console.log(data));
+        .then(response => response.json())
+        .then(data => console.log(data));
 };
 
 function saveSymbol() {
@@ -18,12 +18,16 @@ function fetchNews() {
 }
 fetchNews();
 
+function getTrending() {
+    fetch("https://financialmodelingprep.com/api/v3/stock/actives?apikey=790c2982fd01273e3a03a32d42eb3273")
+    .then(response => response.json())
+    .then(data => displaySymbols(data.mostActiveStock));
+};
+getTrending();
+
+function displaySymbols(activeStockList) {
+    activeStockList.forEach(stock => console.log(stock.ticker));
+    
+};
 
 
-
-// function handleInitialSubmission() {
-// 	let initialsInput = document.getElementById("initials");
-// 	let initialsValue = initialsInput.value;
-
-// let submitInitials = document.getElementById("submitscore");
-// submitInitials.addEventListener("click", handleInitialSubmission);
