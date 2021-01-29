@@ -1,3 +1,54 @@
 #input {
     width: 30%;
+    margin-bottom: 30px;
+}
+
+.stock-card {
+    width: 150px;
+    height: 135px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#results-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 30px;
+
+}
+#news {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    
+}
+/* const divider = $(`<div class="card-divider card-header"></div>`);
+const companyName = $(`<p class="company-name"> ${stock.companyName}</p>`);
+const stockPrice = $(`<p class="stock-price"> ${stock.price}</p>`);
+const stockChangesPercentage = $(`<p class="stock-changes-percentage"> ${stock.changesPercentage}</p>`);
+const stockSymbol = $(`<p class="stock-symbol"> ${stock.ticker}</p>`);
+const stockImage = $(`<img class="stock-image"></img>`); */
+
+.company-name {
+    font-size: 11px;
+    font-weight: bold;
+}
+.stock-details {
+    font-size: 7px;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
