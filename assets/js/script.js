@@ -2,21 +2,21 @@
 
 
 
-var getNews = function (tickers, items) {
+const getNews = function (tickers, items) {
 
     fetch(`https://stocknewsapi.com/api/v1?tickers=${tickers.join()}&items=${items}&token=tvqftcxiwedbpjfxkixyqylbrjwvx3cjeoqmuvj8`)
         .then(response => response.json())
         // .then(data => displayNewsList(data.data));
         .then(data => displayNewsList(data.data));
 };
-var getTickerImages = function (tickers, items) {
-
+const getTickerImages = function (tickers) {
+    let items = 50;
     fetch(`https://stocknewsapi.com/api/v1?tickers=${tickers.join()}&items=${items}&token=tvqftcxiwedbpjfxkixyqylbrjwvx3cjeoqmuvj8`)
         // .then(function(response) {
         //     return response.json();
         // })    
-        .then(response => response.json())
-    // .then(data => displayNewsList(data.data));
+        // .then(response => response.json())
+        // .then(data => displayTickerImages(tickers, data.data));
     // .then(data => {
     //     return data.data.map(article => ({
     //         tickers: article.tickers, 
@@ -24,6 +24,28 @@ var getTickerImages = function (tickers, items) {
     //     }));
     // });
 };
+function displayTickerImages(tickers, newsList) {
+    for (let ticker of tickers) {
+        let imageUrl = getTickerImageUrl(ticker, newsList);
+        displayTickerImage(ticker, imageUrl);
+    }
+}
+function getTickerImageUrl(ticker, newsList) {
+    const matchingStory = newsList.find(function (newsStory) {
+        return newsStory.tickers.includes(ticker);
+    });
+    if(matchingStory) {
+        return matchingStory.image_url;
+    
+    } else {
+        return getTickerImages([ticker]);
+    
+    }
+};
+function displayTickerImage(ticker, imageUrl) {
+    if(imageUrl === "") return;
+    $(`#${ticker} img`).attr("src", imageUrl)
+}
 
 // function saveSymbol() {
 //     $("#symbol").on("click", $())
@@ -45,15 +67,13 @@ getTrending();
 function displayActiveStockList(activeStockList) {
     let tickers = activeStockList.map(stock => stock.ticker);
     activeStockList.forEach(stock => displayStock(stock));
-    // getTickerImages(tickers, 30).then(images => {
-    //     console.log(images);
-    // });
+    getTickerImages(tickers);
 
 };
 
 function displayStock(stock) {
-    console.log(stock);
-    let card = $("<div></div>");
+    // console.log(stock);
+    let card = $(`<div id="${stock.ticker}"></div>`);
     card.addClass("card stock-card");
     card.click(() => handleStockClick(stock.ticker));
 
@@ -61,7 +81,18 @@ function displayStock(stock) {
     const companyName = $(`<span class="company-name"> ${stock.companyName}</span>`);
     const stockDetails = $(`<div class="stock-details"></div>`);
     const stockPrice = $(`<span class="stock-price"> ${stock.price}</span>`);
-    const stockChangesPercentage = $(`<span class="stock-changes-percentage"> ${stock.changesPercentage}</span>`);
+    
+    let stockChangesPercentage; 
+    let percentChange = stock.changesPercentage.replace("%", "")
+    percentChange = percentChange.replace("(", "")
+    percentChange = percentChange.replace(")", "")
+    if(+percentChange > 0) {
+        stockChangesPercentage = $(`<span class="stock-changes-percentage positive-change"> ${stock.changesPercentage}</span>`);
+    } else {
+        stockChangesPercentage = $(`<span class="stock-changes-percentage negative-change"> ${stock.changesPercentage}</span>`);
+    };
+    
+    
     const stockSymbol = $(`<span class="stock-symbol"> ${stock.ticker}</span>`);
     const stockImage = $(`<img class="stock-image"></img>`);
     
@@ -73,8 +104,13 @@ function displayStock(stock) {
     card.append(divider);
     card.append(stockImage);
     $("#results-list").append(card);
+    
 
 }
+function cardStyling() {
+    console.log($(".stock-changes-percentage"));
+}
+
 function handleStockClick(ticker) {
     // getNews(["gme", "tsla", "aapl"], 4);
     getNews([ticker], 5);

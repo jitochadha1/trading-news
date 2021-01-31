@@ -1,6 +1,18 @@
 #input {
-    width: 30%;
+    
     margin-bottom: 30px;
+    display: flex;
+    flex-wrap: nowrap;
+}
+body {
+    background-color: #121212;
+}
+
+.header1 {
+    text-align: center;
+    color: white;
+    font-family: 'Black Ops One';
+    margin-top: 10px;
 }
 
 .stock-card {
@@ -51,4 +63,37 @@ const stockImage = $(`<img class="stock-image"></img>`); */
     display: flex;
     justify-content: space-between;
     width: 100%;
+    background-color: grey;
+}
+
+.positive-change {
+    color: greenyellow;
+}
+.negative-change {
+    color: red;
+}
+#news-list {
+    text-align: left;
+    color: whitesmoke;
+    
+}
+a {
+    color: whitesmoke;
+}
+footer {
+    color: whitesmoke;
+    text-align: center;
+}
+#fetch-news-button {
+    color: whitesmoke;
+    text-align: center;
+    margin-left: 10px;
+    border: 1px solid whitesmoke;
+    padding: 4px;
+    
+}
+#fetch-news-button:hover{
+    background-color: whitesmoke;
+    color: #121212;
+    
 }

@@ -6,16 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Trading News</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+   
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css"
         integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
 
     <nav>
-        <div class="view-high-scores">
-            <h1>Trading News</h1>
+        <div>
+            <h1 class="header1">Trading News</h1>
         </div>
         
 
@@ -27,7 +30,7 @@
                 <input id="symbol" placeholder="Enter Symbol">
                 <button id="fetch-news-button">Fetch News</button>
             </div>
-            <ol id="news-list"></ol>
+            <ul id="news-list"></ul>
         </div>
         <hr>
         <div class="time-left">
