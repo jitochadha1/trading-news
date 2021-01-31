@@ -78,7 +78,7 @@ function displayStock(stock) {
     card.click(() => handleStockClick(stock.ticker));
 
     const divider = $(`<div class="card-divider card-header"></div>`);
-    const companyName = $(`<span class="company-name"> ${stock.companyName}</span>`);
+    const companyName = $(`<div class="company-name"> <span>${stock.companyName}</span> </br> <span class="stock-symbol"> ${stock.ticker}</span> </div>`);
     const stockDetails = $(`<div class="stock-details"></div>`);
     const stockPrice = $(`<span class="stock-price"> ${stock.price}</span>`);
     
@@ -92,14 +92,13 @@ function displayStock(stock) {
         stockChangesPercentage = $(`<span class="stock-changes-percentage negative-change"> ${stock.changesPercentage}</span>`);
     };
     
-    
     const stockSymbol = $(`<span class="stock-symbol"> ${stock.ticker}</span>`);
     const stockImage = $(`<img class="stock-image"></img>`);
     
     divider.append(companyName);
     stockDetails.append(stockPrice);
     stockDetails.append(stockChangesPercentage);
-    stockDetails.append(stockSymbol);
+    // stockDetails.append(stockSymbol);
     divider.append(stockDetails);
     card.append(divider);
     card.append(stockImage);
@@ -126,11 +125,14 @@ function displayStory(newsStory) {
     listItem.html(`<a target="_blank" href="${newsStory.news_url}">${newsStory.title}</a>`);
     $("#news-list").append(listItem);
 }
-function handleFetchNewsSubmit() {
-    let tickerInput = document.querySelector('#symbol').value;
-    getNews([tickerInput], 10);
+function handleFetchNewsSubmit(e) {
+    e.preventDefault();
+    let tickerInput = document.querySelector('#symbol');
+    getNews([tickerInput.value], 10);
+    tickerInput.value = "";
+
 }
-$("#fetch-news-button").click(handleFetchNewsSubmit)
+$("#news-form").submit(handleFetchNewsSubmit)
 
 function clearNewsList() {
     $("#news-list").empty();
