@@ -108,12 +108,7 @@ const stockImage = $(`<img class="stock-image"></img>`); */
     color: whitesmoke;
     
 }
-<<<<<<< HEAD
 #news-list a {
-=======
-
-a {
->>>>>>> 3226879b807b9392f0165a6aac91b79fb5b4e7cd
     color: whitesmoke;
     font-weight: bold;
 }
