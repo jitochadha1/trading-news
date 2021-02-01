@@ -130,3 +130,8 @@ footer {
     background-color: whitesmoke;
     color: #121212;   
 }
+
+#single-stock-form {
+  text-align: center;
+  margin: 15px;
+}
