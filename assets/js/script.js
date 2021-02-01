@@ -61,7 +61,7 @@ function displayStock(stock) {
     card.click(() => handleStockClick(stock.ticker));
 
     const divider = $(`<div class="card-divider card-header"></div>`);
-    const companyName = $(`<div class="company-name"> <span>${stock.companyName}</span> </br> <span class="stock-symbol"> ${stock.ticker}</span> </div>`);
+    const companyName = $(`<a class="company-name" href="./single-stock.html?name=${stock.companyName}&symbol=${stock.ticker}"> <span>${stock.companyName}</span> </br> <span class="stock-symbol"> ${stock.ticker}</span> </a>`);
     const stockDetails = $(`<div class="stock-details"></div>`);
     const stockPrice = $(`<span class="stock-price"> ${stock.price}</span>`);
     let stockChangesPercentage; 

@@ -1,6 +1,7 @@
 let fmpApiKey = `790c2982fd01273e3a03a32d42eb3273`
 let companyNameEl = document.querySelector("#company-name");
 let stockSymbolEl = document.querySelector("#stock-symbol");
+let formEl = document.querySelector("#single-stock-form");
 
 let getStock = function() {
   let qArr = document.location.search.substring(1).split("&");
@@ -14,33 +15,14 @@ let getStock = function() {
   let companyName = qObj.name;
   let stockSymbol = qObj.symbol;
   if(stockSymbol && companyName) {
-    companyNameEl.textContent = companyName;
+    companyNameEl.textContent = companyName.replace("%20"," ");
     stockSymbolEl.textContent = stockSymbol;
     fetchStockQuote(stockSymbol);
   } else {
-    document.location.replace("./index.html");
+    // MAKE SURE TO ADD THIS BACK IN
+    // document.location.replace("./index.html");
   }
 };
-
-// let toUsd = function(num) {
-//   let int = parseInt(num);
-//   let str = int.toString();
-//   let float = parseFloat(int)
-//   console.log(float)
-//   let arr = str.split("");
-//   arr.reverse();
-//   formatArr = [];
-//   for (let i = 0; i < arr.length; i++) {
-//     let c = "";
-//     if(i % 3 === 0 && i != 0) {
-//       c = ",";
-//     };
-//     formatArr.push(arr[i] + c);
-//   }
-//   formatArr.reverse();
-//   str = formatArr.join("");
-//   return str
-// }
 
 function fetchStockQuote(stockSymbol) {
   fetch(`https://financialmodelingprep.com/api/v3/quote/${stockSymbol}?apikey=${fmpApiKey}`)
@@ -133,4 +115,15 @@ function displayTable(tableData) {
   $("#price-div").append(tableEl);
 };
 
+let formHandler = function(event) {
+  event.preventDefault();
+  let symbol = event.target.querySelector("#symbol")
+  fetchStockQuote(symbol.value);
+}
+
+// Event Listeners
+formEl.addEventListener("submit",formHandler)
+
+
+// ON PAGE LOAD 
 getStock();
