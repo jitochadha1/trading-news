@@ -1,4 +1,5 @@
 // var userInput = $("#symbol");
+let fmpApiKey =  `373886b34df66a9a6c72c04fa0d29dd8`
 
 const getNews = function (tickers, items) {
     fetch(`https://stocknewsapi.com/api/v1?tickers=${tickers.join()}&items=${items}&token=tvqftcxiwedbpjfxkixyqylbrjwvx3cjeoqmuvj8`)
@@ -12,7 +13,7 @@ const getTickerImages = function (tickers) {
     fetch(`https://stocknewsapi.com/api/v1?tickers=${tickers.join()}&items=${items}&token=tvqftcxiwedbpjfxkixyqylbrjwvx3cjeoqmuvj8`)
         // .then(function(response) {
         //     return response.json();
-        // })    
+        // })
         // .then(response => response.json())
         // .then(data => displayTickerImages(tickers, data.data));
     // .then(data => {
@@ -58,7 +59,7 @@ function displayTickerImage(ticker, imageUrl) {
 // fetchNews();
 
 function getTrending() {
-    fetch("https://financialmodelingprep.com/api/v3/stock/actives?apikey=790c2982fd01273e3a03a32d42eb3273")
+    fetch(`https://financialmodelingprep.com/api/v3/stock/actives?apikey=${fmpApiKey}`)
         .then(response => response.json())
         .then(data => displayActiveStockList(data.mostActiveStock));
 };

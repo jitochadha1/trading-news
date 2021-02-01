@@ -22,25 +22,25 @@ let getStock = function() {
   }
 };
 
-let toUsd = function(num) {
-  let int = parseInt(num);
-  let str = int.toString();
-  let float = parseFloat(int)
-  console.log(float)
-  let arr = str.split("");
-  arr.reverse();
-  formatArr = [];
-  for (let i = 0; i < arr.length; i++) {
-    let c = "";
-    if(i % 3 === 0 && i != 0) {
-      c = ",";
-    };
-    formatArr.push(arr[i] + c);
-  }
-  formatArr.reverse();
-  str = formatArr.join("");
-  return str
-}
+// let toUsd = function(num) {
+//   let int = parseInt(num);
+//   let str = int.toString();
+//   let float = parseFloat(int)
+//   console.log(float)
+//   let arr = str.split("");
+//   arr.reverse();
+//   formatArr = [];
+//   for (let i = 0; i < arr.length; i++) {
+//     let c = "";
+//     if(i % 3 === 0 && i != 0) {
+//       c = ",";
+//     };
+//     formatArr.push(arr[i] + c);
+//   }
+//   formatArr.reverse();
+//   str = formatArr.join("");
+//   return str
+// }
 
 function fetchStockQuote(stockSymbol) {
   fetch(`https://financialmodelingprep.com/api/v3/quote/${stockSymbol}?apikey=${fmpApiKey}`)
