@@ -1,14 +1,12 @@
 // var userInput = $("#symbol");
 
-
-
 const getNews = function (tickers, items) {
-
     fetch(`https://stocknewsapi.com/api/v1?tickers=${tickers.join()}&items=${items}&token=tvqftcxiwedbpjfxkixyqylbrjwvx3cjeoqmuvj8`)
         .then(response => response.json())
         // .then(data => displayNewsList(data.data));
         .then(data => displayNewsList(data.data));
 };
+
 const getTickerImages = function (tickers) {
     let items = 50;
     fetch(`https://stocknewsapi.com/api/v1?tickers=${tickers.join()}&items=${items}&token=tvqftcxiwedbpjfxkixyqylbrjwvx3cjeoqmuvj8`)
@@ -24,12 +22,14 @@ const getTickerImages = function (tickers) {
     //     }));
     // });
 };
+
 function displayTickerImages(tickers, newsList) {
     for (let ticker of tickers) {
         let imageUrl = getTickerImageUrl(ticker, newsList);
         displayTickerImage(ticker, imageUrl);
     }
-}
+};
+
 function getTickerImageUrl(ticker, newsList) {
     const matchingStory = newsList.find(function (newsStory) {
         return newsStory.tickers.includes(ticker);
@@ -42,10 +42,11 @@ function getTickerImageUrl(ticker, newsList) {
     
     }
 };
+
 function displayTickerImage(ticker, imageUrl) {
     if(imageUrl === "") return;
     $(`#${ticker} img`).attr("src", imageUrl)
-}
+};
 
 // function saveSymbol() {
 //     $("#symbol").on("click", $())
@@ -60,15 +61,14 @@ function getTrending() {
     fetch("https://financialmodelingprep.com/api/v3/stock/actives?apikey=790c2982fd01273e3a03a32d42eb3273")
         .then(response => response.json())
         .then(data => displayActiveStockList(data.mostActiveStock));
-
 };
+
 getTrending();
 
 function displayActiveStockList(activeStockList) {
     let tickers = activeStockList.map(stock => stock.ticker);
     activeStockList.forEach(stock => displayStock(stock));
     getTickerImages(tickers);
-
 };
 
 function displayStock(stock) {
@@ -92,48 +92,45 @@ function displayStock(stock) {
         stockChangesPercentage = $(`<span class="stock-changes-percentage negative-change"> ${stock.changesPercentage}</span>`);
     };
     
-    const stockSymbol = $(`<span class="stock-symbol"> ${stock.ticker}</span>`);
     const stockImage = $(`<img class="stock-image"></img>`);
-    
     divider.append(companyName);
     stockDetails.append(stockPrice);
     stockDetails.append(stockChangesPercentage);
-    // stockDetails.append(stockSymbol);
     divider.append(stockDetails);
     card.append(divider);
     card.append(stockImage);
     $("#results-list").append(card);
-    
+};
 
-}
 function cardStyling() {
     console.log($(".stock-changes-percentage"));
-}
+};
 
 function handleStockClick(ticker) {
     // getNews(["gme", "tsla", "aapl"], 4);
     getNews([ticker], 5);
-
-}
+};
 
 function displayNewsList(newsList) {
     clearNewsList();
     newsList.forEach(newsStory => displayStory(newsStory));
-}
+};
+
 function displayStory(newsStory) {
     let listItem = $("<li></li>");
     listItem.html(`<a target="_blank" href="${newsStory.news_url}">${newsStory.title}</a>`);
     $("#news-list").append(listItem);
-}
+};
+
 function handleFetchNewsSubmit(e) {
     e.preventDefault();
     let tickerInput = document.querySelector('#symbol');
     getNews([tickerInput.value], 10);
     tickerInput.value = "";
-
-}
-$("#news-form").submit(handleFetchNewsSubmit)
+};
 
 function clearNewsList() {
-    $("#news-list").empty();
-}
+  $("#news-list").empty();
+};
+
+$("#news-form").submit(handleFetchNewsSubmit)

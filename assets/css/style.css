@@ -6,13 +6,25 @@
 }
 body {
     background-color: #121212;
+    color: white;
 }
 
 .header1 {
     text-align: center;
-    color: white;
     font-family: 'Black Ops One';
     margin-top: 10px;
+}
+
+.single-h1, .single-h2 {
+  font-size: 38px;
+  text-align: center;
+  font-family: 'Black Ops One';
+  margin-top: 10px;
+}
+
+.single-h2 {
+  font-size: 26px;
+  margin-top: 0;
 }
 
 #results-list {
@@ -26,6 +38,7 @@ body {
     padding-top: 30px;
 
 }
+
 #news {
     display: flex;
     flex-direction: column;
@@ -33,6 +46,7 @@ body {
     
     
 }
+
 /* const divider = $(`<div class="card-divider card-header"></div>`);
 const companyName = $(`<p class="company-name"> ${stock.companyName}</p>`);
 const stockPrice = $(`<p class="stock-price"> ${stock.price}</p>`);
@@ -51,6 +65,7 @@ const stockImage = $(`<img class="stock-image"></img>`); */
     font-size: 12px;
     font-weight: bold;
 }
+
 .stock-details {
     font-size: 12px;
     display: flex;
@@ -68,21 +83,26 @@ const stockImage = $(`<img class="stock-image"></img>`); */
 .positive-change {
     color: greenyellow;
 }
+
 .negative-change {
     color: red;
 }
+
 #news-list {
     text-align: left;
     color: whitesmoke;
     
 }
+
 a {
     color: whitesmoke;
 }
+
 footer {
     color: whitesmoke;
     text-align: center;
 }
+
 #fetch-news-button {
     color: whitesmoke;
     text-align: center;
@@ -93,6 +113,5 @@ footer {
 }
 #fetch-news-button:hover{
     background-color: whitesmoke;
-    color: #121212;
-    
+    color: #121212;   
 }
