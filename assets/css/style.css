@@ -7,6 +7,21 @@
 body {
     background-color: #121212;
 }
+#responsive-menu {
+    background-color: whitesmoke;
+}
+#dropdown-menu {
+    background-color: whitesmoke;
+    color: black;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-around;
+}
+#dropdown-menu button {
+    font-weight: bold;
+    outline: none;
+
+}
 
 .header1 {
     text-align: center;
@@ -76,8 +91,9 @@ const stockImage = $(`<img class="stock-image"></img>`); */
     color: whitesmoke;
     
 }
-a {
+#news-list a {
     color: whitesmoke;
+    font-weight: bold;
 }
 footer {
     color: whitesmoke;
