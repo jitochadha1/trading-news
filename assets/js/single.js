@@ -11,18 +11,21 @@ let getStock = function() {
     qObj[eachQ[0]] = eachQ[1];
   }
 
-  console.log(qObj);
   let companyName = qObj.name;
   let stockSymbol = qObj.symbol;
   if(stockSymbol && companyName) {
-    companyNameEl.textContent = companyName.replace("%20"," ");
-    stockSymbolEl.textContent = stockSymbol;
+    displayHeaders(companyName, stockSymbol);
     fetchStockQuote(stockSymbol);
   } else {
     // MAKE SURE TO ADD THIS BACK IN
     // document.location.replace("./index.html");
   }
 };
+
+function displayHeaders(name, symbol) {
+  companyNameEl.textContent = name.replace("%20"," ");
+  stockSymbolEl.textContent = symbol;
+}
 
 function fetchStockQuote(stockSymbol) {
   fetch(`https://financialmodelingprep.com/api/v3/quote/${stockSymbol}?apikey=${fmpApiKey}`)
@@ -31,8 +34,13 @@ function fetchStockQuote(stockSymbol) {
 };
 
 function prepareTable(data) {
+  // clear tables already there
+  $("#price-div").empty();
+
+  // change headers
+  displayHeaders(data.name, data.symbol)
+  
   // create an array of table data rows as objects
-    
   // prepare table 1 data
   let table1 = [
     {
@@ -112,13 +120,15 @@ function displayTable(tableData) {
       tableRowEl.append(tdOne, tdTwo);
     tableBodyEl.append(tableRowEl);
   }
+
   $("#price-div").append(tableEl);
 };
 
 let formHandler = function(event) {
   event.preventDefault();
-  let symbol = event.target.querySelector("#symbol")
-  fetchStockQuote(symbol.value);
+  let symbolEl = event.target.querySelector("#symbol")
+  fetchStockQuote(symbolEl.value);
+  symbolEl.value = "";
 }
 
 // Event Listeners
