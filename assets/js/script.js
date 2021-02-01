@@ -1,5 +1,5 @@
 initializePage();
-let fmpApiKey =  `373886b34df66a9a6c72c04fa0d29dd8`
+
 
 function getNews (tickers, items) {
     fetch(`https://stocknewsapi.com/api/v1?tickers=${tickers.join()}&items=${items}&token=tvqftcxiwedbpjfxkixyqylbrjwvx3cjeoqmuvj8`)
@@ -43,6 +43,7 @@ function displayTickerImage(ticker, imageUrl) {
 };
 
 function getTrending() {
+    const fmpApiKey =  `373886b34df66a9a6c72c04fa0d29dd8`
     fetch(`https://financialmodelingprep.com/api/v3/stock/actives?apikey=${fmpApiKey}`)
         .then(response => response.json())
         .then(data => displayActiveStockList(data.mostActiveStock));
