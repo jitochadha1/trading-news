@@ -4,10 +4,12 @@
     display: flex;
     flex-wrap: nowrap;
 }
+
 body {
     background-color: #121212;
     color: white;
 }
+
 #responsive-menu {
     background-color: whitesmoke;
 }
@@ -95,6 +97,14 @@ const stockImage = $(`<img class="stock-image"></img>`); */
     background-color: grey;
 }
 
+.card-header a {
+  color: black;
+}
+
+.card-header a:hover {
+  color: blue;
+}
+
 .positive-change {
     color: greenyellow;
 }
@@ -134,4 +144,12 @@ footer {
 #single-stock-form {
   text-align: center;
   margin: 15px;
+}
+
+.accordion-content {
+  overflow-x: hidden;
+}
+
+#income-div {
+  overflow-x: auto;
 }
