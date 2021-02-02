@@ -1,6 +1,12 @@
 let fmpApiKey = `790c2982fd01273e3a03a32d42eb3273`
 let companyNameEl = document.querySelector("#company-name");
 let stockSymbolEl = document.querySelector("#stock-symbol");
+let formEl = document.querySelector("#single-stock-form");
+
+// format currency data with toUSD.format(num)
+let toComSep = new Intl.NumberFormat('en-US');
+let toUSD = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+
 
 let getStock = function() {
   let qArr = document.location.search.substring(1).split("&");
@@ -10,72 +16,61 @@ let getStock = function() {
     qObj[eachQ[0]] = eachQ[1];
   }
 
-  console.log(qObj);
-  let companyName = qObj.name;
+  // let companyName = qObj.name;
+  // ^ not using anymore
   let stockSymbol = qObj.symbol;
-  if(stockSymbol && companyName) {
-    companyNameEl.textContent = companyName;
-    stockSymbolEl.textContent = stockSymbol;
+  if(stockSymbol) {
     fetchStockQuote(stockSymbol);
+    fetchIncomeStatement(stockSymbol);
   } else {
     document.location.replace("./index.html");
   }
 };
 
-// let toUsd = function(num) {
-//   let int = parseInt(num);
-//   let str = int.toString();
-//   let float = parseFloat(int)
-//   console.log(float)
-//   let arr = str.split("");
-//   arr.reverse();
-//   formatArr = [];
-//   for (let i = 0; i < arr.length; i++) {
-//     let c = "";
-//     if(i % 3 === 0 && i != 0) {
-//       c = ",";
-//     };
-//     formatArr.push(arr[i] + c);
-//   }
-//   formatArr.reverse();
-//   str = formatArr.join("");
-//   return str
-// }
+function displayHeaders(name, symbol) {
+  companyNameEl.textContent = name.replace("%20"," ");
+  stockSymbolEl.textContent = symbol;
+}
 
 function fetchStockQuote(stockSymbol) {
   fetch(`https://financialmodelingprep.com/api/v3/quote/${stockSymbol}?apikey=${fmpApiKey}`)
     .then(response => response.json())
-    .then(data => prepareTable(data[0]));
+    .then(data => preparePriceTable(data[0]));
 };
 
-function prepareTable(data) {
+function preparePriceTable(data) {
+  // clear tables already there
+  $("#price-div").empty();
+
+  // change headers
+  displayHeaders(data.name, data.symbol)
+  
   // create an array of table data rows as objects
-    
   // prepare table 1 data
   let table1 = [
     {
       key: "Price",
-      value: data.price
+      value: toUSD.format(data.price)
     },
     {
       key: "Percent Change",
-      value: data.changesPercentage
+      value: data.changesPercentage + '%'
     },
     {
       key: "Open",
-      value: data.open
+      value: toUSD.format(data.open)
     },
     {
       key: "High",
-      value: data.dayHigh
+      value: toUSD.format(data.dayHigh)
     },
     {
       key: "Low",
-      value: data.dayLow
+      value: toUSD.format(data.dayLow)
     },
     {
       key: "Volume",
-      value: data.volume
+      value: toComSep.format(data.volume)
     }
   ];
 
@@ -83,36 +78,36 @@ function prepareTable(data) {
   let table2 = [
     {
       key: "Market Cap",
-      value: data.marketCap
+      value: "$" + toComSep.format(data.marketCap)
     },
     {
       key: "EPS",
-      value: data.eps
+      value: toUSD.format(data.eps)
     },
     {
       key: "PE",
-      value: data.pe
+      value: toComSep.format(data.pe)
     },
     {
       key: "52 Week High",
-      value: data.yearHigh
+      value: toUSD.format(data.yearHigh)
     },
     {
       key: "52 Week Low",
-      value: data.yearLow
+      value: toUSD.format(data.yearLow)
     },
     {
       key: "Avg Volume",
-      value: data.avgVolume
+      value: toComSep.format(data.avgVolume)
     }
   ];
-  displayTable(table1);
-  displayTable(table2);
+  displayPriceTable(table1);
+  displayPriceTable(table2);
 };
 
-function displayTable(tableData) {
+function displayPriceTable(tableData) {
   // create table and body
-  let tableEl = $("<table>").addClass("cell medium-6")
+  let tableEl = $("<table>").addClass("cell medium-6 unstriped")
   let tableBodyEl = $("<tbody>")
   tableEl.append(tableBodyEl);
 
@@ -130,7 +125,105 @@ function displayTable(tableData) {
       tableRowEl.append(tdOne, tdTwo);
     tableBodyEl.append(tableRowEl);
   }
+
   $("#price-div").append(tableEl);
 };
 
+function fetchIncomeStatement(stockSymbol) {
+  fetch(`https://financialmodelingprep.com/api/v3/income-statement/${stockSymbol}?limit=5&apikey=${fmpApiKey}`)
+    .then(response => response.json())
+    .then(data => prepareIncomeStatement(data));
+}
+
+function prepareIncomeStatement(arr) {
+  // clear tables already there
+  $("#income-div").empty();
+
+  var tableData = {}
+    tableData.date = ["Date"];
+    tableData.revenue = ["Sales"];
+    tableData.costOfRevenue = ["Cost of Sales"];
+    tableData.grossProfit = ["Gross Profit"];
+    tableData.grossProfitRatio = ["Gross Margin"];
+    tableData.sellingAndMarketingExpenses = ["Marketing Expenses"];
+    tableData.generalAndAdministrativeExpenses = ["G&A Expenses"];
+    tableData.researchAndDevelopmentExpenses = ["R&D Expenses"];
+    tableData.operatingExpenses = ["Operating Expenses"];
+    tableData.operatingIncome = ["Operating Income"];
+    tableData.totalOtherIncomeExpensesNet = ["Tot. Oth. Inc. Exp. Net"];
+    tableData.otherExpenses = ["Other Expenses"];
+    tableData.incomeBeforeTax = ["Income Before Taxes"];
+    tableData.incomeTaxExpense = ["Income Tax Expense"];
+    tableData.netIncome = ["Net Income"];
+    tableData.netIncomeRatio = ["NI Margin"];
+    tableData.interestExpense = ["Interest Expense"];
+    tableData.depreciationAndAmortization = ["Deprec. And Amort."];
+    tableData.ebitda = ["EBITDA"];
+    tableData.eps = ["EPS"];
+    tableData.epsdiluted = ["EPS diluted"];
+
+  for (let i = 0; i < arr.length; i++) {
+    tableData.date.push(arr[i].date);
+    tableData.revenue.push(toComSep.format(arr[i].revenue));
+    tableData.costOfRevenue.push(toComSep.format(arr[i].costOfRevenue));
+    tableData.grossProfit.push(toComSep.format(arr[i].grossProfit));
+    tableData.grossProfitRatio.push(toComSep.format(arr[i].grossProfitRatio * 100) + '%');
+    tableData.sellingAndMarketingExpenses.push(toComSep.format(arr[i].sellingAndMarketingExpenses));
+    tableData.generalAndAdministrativeExpenses.push(toComSep.format(arr[i].generalAndAdministrativeExpenses));
+    tableData.researchAndDevelopmentExpenses.push(toComSep.format(arr[i].researchAndDevelopmentExpenses));
+    tableData.operatingExpenses.push(toComSep.format(arr[i].operatingExpenses));
+    tableData.operatingIncome.push(toComSep.format(arr[i].operatingIncome));
+    tableData.totalOtherIncomeExpensesNet.push(toComSep.format(arr[i].totalOtherIncomeExpensesNet));
+    tableData.otherExpenses.push(toComSep.format(arr[i].otherExpenses));
+    tableData.incomeBeforeTax.push(toComSep.format(arr[i].incomeBeforeTax));
+    tableData.incomeTaxExpense.push(toComSep.format(arr[i].incomeTaxExpense));
+    tableData.netIncome.push(toComSep.format(arr[i].netIncome));
+    tableData.netIncomeRatio.push(toComSep.format(arr[i].netIncomeRatio * 100) + '%');
+    tableData.interestExpense.push(toComSep.format(arr[i].interestExpense));
+    tableData.depreciationAndAmortization.push(toComSep.format(arr[i].depreciationAndAmortization));
+    tableData.ebitda.push(toComSep.format(arr[i].ebitda));
+    tableData.eps.push(toComSep.format(arr[i].eps));
+    tableData.epsdiluted.push(toComSep.format(arr[i].epsdiluted));
+  }
+  displayIncomeStatement(tableData);
+};
+
+// WIP
+function displayIncomeStatement(tableData) {
+  // create table and body
+  let tableEl = $("<table>").addClass("cell unstriped")
+  let tableBodyEl = $("<tbody>")
+  tableEl.append(tableBodyEl);
+
+  // append table data as a rows
+  for (const arr in tableData) {
+    var tableRowEl = $("<tr>");
+    for (let i = 0; i < tableData[arr].length; i++) {
+      var tdEl = $("<td>")
+      if(i === 0) {
+        tdEl.addClass("td-left")
+      } else {
+        tdEl.addClass("td-right")
+      }
+
+      tdEl.text(tableData[arr][i]);
+      console.log(tableData[arr][i]);
+      tableRowEl.append(tdEl);
+    }
+    tableEl.append(tableRowEl);
+  }
+  $("#income-div").append(tableEl);
+};
+
+let formHandler = function(event) {
+  event.preventDefault();
+  let symbolEl = event.target.querySelector("#symbol")
+  document.location.search = `?symbol=${symbolEl.value}`;
+  symbolEl.value = "";
+}
+
+// Event Listeners
+formEl.addEventListener("submit",formHandler)
+
+// ON LOAD
 getStock();
