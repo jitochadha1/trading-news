@@ -168,3 +168,58 @@ footer {
   background-color: #f9f9f9;
   z-index: 9999;
 }
+
+#portfolio {
+    display: none;
+}
+
+.position-card-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color: grey;
+}
+
+.position-details {
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+/* .position-price {
+
+} */
+/* .position-changes-percentage {
+
+} */
+.position-card {
+    width: 275px;
+    height: 200px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.position-card-header a {
+    color: black;
+  }
+  
+.position-card-header a:hover {
+    color: blue;
+  }
+
+#news-form {
+  width: 100%;
+  padding: 40px;
+  text-align: center;
+}
+
+#symbol {
+  width: 455px;
+}
+
+@media screen and (max-width: 655px) {
+  #symbol, #fetch-news-button  {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 5px;
+  }
+}
