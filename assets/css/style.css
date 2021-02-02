@@ -4,10 +4,12 @@
     display: flex;
     flex-wrap: nowrap;
 }
+
 body {
     background-color: #121212;
     color: white;
 }
+
 #responsive-menu {
     background-color: whitesmoke;
 }
@@ -95,6 +97,14 @@ const stockImage = $(`<img class="stock-image"></img>`); */
     background-color: grey;
 }
 
+.card-header a {
+  color: black;
+}
+
+.card-header a:hover {
+  color: blue;
+}
+
 .positive-change {
     color: greenyellow;
 }
@@ -134,4 +144,27 @@ footer {
 #single-stock-form {
   text-align: center;
   margin: 15px;
+}
+
+.accordion-content {
+  overflow-x: hidden;
+}
+
+#income-div {
+  overflow-x: auto;
+}
+
+.td-right {
+  text-align: right;
+  z-index: 7777;
+  overflow-x: hidden;
+}
+
+.td-left {
+  min-width: 185px;
+  position: sticky;
+  left: 0;
+  background-color: inherit;
+  background-color: #f9f9f9;
+  z-index: 9999;
 }
