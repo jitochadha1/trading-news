@@ -28,8 +28,8 @@
     </nav>
   </header>
   
-  <form id="single-stock-form" class="">
-    <input id="symbol" placeholder="Enter Stock Symbol">
+  <form id="single-stock-form" class="autocomplete-form">
+    <input id="symbol" list="all-tickers" placeholder="Enter Stock Symbol">
     <button id="fetch-news-button">Go</button>
   </form>
   
@@ -68,6 +68,7 @@
   <script>
     $(document).foundation();
   </script>
+  <script src="./assets/js/search-form-complete.js" ></script>
   <script src="./assets/js/single.js"></script>
 </body>
 </html>

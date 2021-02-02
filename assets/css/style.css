@@ -205,3 +205,21 @@ footer {
 .position-card-header a:hover {
     color: blue;
   }
+
+#news-form {
+  width: 100%;
+  padding: 40px;
+  text-align: center;
+}
+
+#symbol {
+  width: 455px;
+}
+
+@media screen and (max-width: 655px) {
+  #symbol, #fetch-news-button  {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 5px;
+  }
+}
