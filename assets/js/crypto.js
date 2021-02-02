@@ -8,11 +8,17 @@
 // };
 
 //Coin Gecko
-function getCoinInfo (){
-    fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false')
-    .then(response => response.json())
-    .then(data => displayCryptoList(data.data));
+
+function getCoinInfo(id, symbol) {
+    fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false`)
+    .then(function(response){
+      return response.json();
+    }).then(function(data) {
+      console.log(data);
+    })
 };
+getCoinInfo();
+
 //crypto fetch api
 // function getCrypto (){
 // fetch("https://crypto-asset-market-data-unified-apis-for-professionals.p.rapidapi.com/api/v1/blockfacts/price?asset=BTC&denominator=USD", {
