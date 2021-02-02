@@ -4,7 +4,9 @@ let stockSymbolEl = document.querySelector("#stock-symbol");
 let formEl = document.querySelector("#single-stock-form");
 
 // format currency data with toUSD.format(num)
+let toComSep = new Intl.NumberFormat('en-US');
 let toUSD = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+
 
 let getStock = function() {
   let qArr = document.location.search.substring(1).split("&");
@@ -68,7 +70,7 @@ function preparePriceTable(data) {
     },
     {
       key: "Volume",
-      value: toUSD.format(data.volume).slice(1, -3)
+      value: toComSep.format(data.volume)
     }
   ];
 
@@ -76,7 +78,7 @@ function preparePriceTable(data) {
   let table2 = [
     {
       key: "Market Cap",
-      value: toUSD.format(data.marketCap).slice(1, -3)
+      value: "$" + toComSep.format(data.marketCap)
     },
     {
       key: "EPS",
@@ -84,7 +86,7 @@ function preparePriceTable(data) {
     },
     {
       key: "PE",
-      value: data.pe
+      value: toComSep.format(data.pe)
     },
     {
       key: "52 Week High",
@@ -96,7 +98,7 @@ function preparePriceTable(data) {
     },
     {
       key: "Avg Volume",
-      value: toUSD.format(data.avgVolume).slice(1, -3)
+      value: toComSep.format(data.avgVolume)
     }
   ];
   displayPriceTable(table1);
@@ -105,7 +107,7 @@ function preparePriceTable(data) {
 
 function displayPriceTable(tableData) {
   // create table and body
-  let tableEl = $("<table>").addClass("cell medium-6")
+  let tableEl = $("<table>").addClass("cell medium-6 unstriped")
   let tableBodyEl = $("<tbody>")
   tableEl.append(tableBodyEl);
 
@@ -162,26 +164,26 @@ function prepareIncomeStatement(arr) {
 
   for (let i = 0; i < arr.length; i++) {
     tableData.date.push(arr[i].date);
-    tableData.revenue.push(toUSD.format(arr[i].revenue).slice(1, -3));
-    tableData.costOfRevenue.push(toUSD.format(arr[i].costOfRevenue).slice(1, -3));
-    tableData.grossProfit.push(toUSD.format(arr[i].grossProfit).slice(1, -3));
-    tableData.grossProfitRatio.push(toUSD.format(arr[i].grossProfitRatio * 100).slice(1, -3) + '%');
-    tableData.sellingAndMarketingExpenses.push(toUSD.format(arr[i].sellingAndMarketingExpenses).slice(1, -3));
-    tableData.generalAndAdministrativeExpenses.push(toUSD.format(arr[i].generalAndAdministrativeExpenses).slice(1, -3));
-    tableData.researchAndDevelopmentExpenses.push(toUSD.format(arr[i].researchAndDevelopmentExpenses).slice(1, -3));
-    tableData.operatingExpenses.push(toUSD.format(arr[i].operatingExpenses).slice(1, -3));
-    tableData.operatingIncome.push(toUSD.format(arr[i].operatingIncome).slice(1, -3));
-    tableData.totalOtherIncomeExpensesNet.push(toUSD.format(arr[i].totalOtherIncomeExpensesNet).slice(1, -3));
-    tableData.otherExpenses.push(toUSD.format(arr[i].otherExpenses).slice(1, -3));
-    tableData.incomeBeforeTax.push(toUSD.format(arr[i].incomeBeforeTax).slice(1, -3));
-    tableData.incomeTaxExpense.push(toUSD.format(arr[i].incomeTaxExpense).slice(1, -3));
-    tableData.netIncome.push(toUSD.format(arr[i].netIncome).slice(1, -3));
-    tableData.netIncomeRatio.push(toUSD.format(arr[i].netIncomeRatio * 100).slice(1, -3) + '%');
-    tableData.interestExpense.push(toUSD.format(arr[i].interestExpense).slice(1, -3));
-    tableData.depreciationAndAmortization.push(toUSD.format(arr[i].depreciationAndAmortization).slice(1, -3));
-    tableData.ebitda.push(toUSD.format(arr[i].ebitda).slice(1, -3));
-    tableData.eps.push(toUSD.format(arr[i].eps));
-    tableData.epsdiluted.push(toUSD.format(arr[i].epsdiluted).slice(1, -3));
+    tableData.revenue.push(toComSep.format(arr[i].revenue));
+    tableData.costOfRevenue.push(toComSep.format(arr[i].costOfRevenue));
+    tableData.grossProfit.push(toComSep.format(arr[i].grossProfit));
+    tableData.grossProfitRatio.push(toComSep.format(arr[i].grossProfitRatio * 100) + '%');
+    tableData.sellingAndMarketingExpenses.push(toComSep.format(arr[i].sellingAndMarketingExpenses));
+    tableData.generalAndAdministrativeExpenses.push(toComSep.format(arr[i].generalAndAdministrativeExpenses));
+    tableData.researchAndDevelopmentExpenses.push(toComSep.format(arr[i].researchAndDevelopmentExpenses));
+    tableData.operatingExpenses.push(toComSep.format(arr[i].operatingExpenses));
+    tableData.operatingIncome.push(toComSep.format(arr[i].operatingIncome));
+    tableData.totalOtherIncomeExpensesNet.push(toComSep.format(arr[i].totalOtherIncomeExpensesNet));
+    tableData.otherExpenses.push(toComSep.format(arr[i].otherExpenses));
+    tableData.incomeBeforeTax.push(toComSep.format(arr[i].incomeBeforeTax));
+    tableData.incomeTaxExpense.push(toComSep.format(arr[i].incomeTaxExpense));
+    tableData.netIncome.push(toComSep.format(arr[i].netIncome));
+    tableData.netIncomeRatio.push(toComSep.format(arr[i].netIncomeRatio * 100) + '%');
+    tableData.interestExpense.push(toComSep.format(arr[i].interestExpense));
+    tableData.depreciationAndAmortization.push(toComSep.format(arr[i].depreciationAndAmortization));
+    tableData.ebitda.push(toComSep.format(arr[i].ebitda));
+    tableData.eps.push(toComSep.format(arr[i].eps));
+    tableData.epsdiluted.push(toComSep.format(arr[i].epsdiluted));
   }
   displayIncomeStatement(tableData);
 };
@@ -189,7 +191,7 @@ function prepareIncomeStatement(arr) {
 // WIP
 function displayIncomeStatement(tableData) {
   // create table and body
-  let tableEl = $("<table>").addClass("cell hover")
+  let tableEl = $("<table>").addClass("cell unstriped")
   let tableBodyEl = $("<tbody>")
   tableEl.append(tableBodyEl);
 
@@ -197,7 +199,13 @@ function displayIncomeStatement(tableData) {
   for (const arr in tableData) {
     var tableRowEl = $("<tr>");
     for (let i = 0; i < tableData[arr].length; i++) {
-      var tdEl = $("<td>");
+      var tdEl = $("<td>")
+      if(i === 0) {
+        tdEl.addClass("td-left")
+      } else {
+        tdEl.addClass("td-right")
+      }
+
       tdEl.text(tableData[arr][i]);
       console.log(tableData[arr][i]);
       tableRowEl.append(tdEl);

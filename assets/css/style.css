@@ -153,3 +153,18 @@ footer {
 #income-div {
   overflow-x: auto;
 }
+
+.td-right {
+  text-align: right;
+  z-index: 7777;
+  overflow-x: hidden;
+}
+
+.td-left {
+  min-width: 185px;
+  position: sticky;
+  left: 0;
+  background-color: inherit;
+  background-color: #f9f9f9;
+  z-index: 9999;
+}
