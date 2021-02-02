@@ -2,31 +2,31 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Trading News</title>
-   
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css"
-        integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Trading News</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css"
+    integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
 
-    <nav>
-        <div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="medium">
-            <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
-            <div class="title-bar-title">Menu</div>
-          </div>
-          
-          <div class="top-bar" id="responsive-menu">
-            <div class="top-bar-left">
-              <ul class="dropdown menu" data-dropdown-menu id="dropdown-menu">
-                <!-- <li class="menu-text">Site Title</li> -->
-                <!-- <li class="has-submenu">
+  <nav>
+    <div class="title-bar" data-responsive-toggle="responsive-menu" data-hide-for="medium">
+      <button class="menu-icon" type="button" data-toggle="responsive-menu"></button>
+      <div class="title-bar-title">Menu</div>
+    </div>
+
+    <div class="top-bar" id="responsive-menu">
+      <div class="top-bar-left">
+        <ul class="dropdown menu" data-dropdown-menu id="dropdown-menu">
+          <!-- <li class="menu-text">Site Title</li> -->
+          <!-- <li class="has-submenu">
                   <a href="#0">One</a>
                   <ul class="submenu menu vertical" data-submenu>
                     <li><a href="#0">Home</a></li>
@@ -34,39 +34,52 @@
                     <li><a href="#0"></a></li>
                   </ul>
                 </li> -->
-                <li><button id="home-nav">Home</button></li>
-                <li><button id="trending-nav">Trending</button></li>
-                <li><button id="portfolio-nav">Portfolio</button></li>                
-              </ul>
-            </div>
-            <div class="top-bar-right">
-              
-            </div>
-          </div>
-        <div>
-            <h1 class="header1">Trading News</h1>
-        </div>
-    </nav>
-        <div id="home">Home</div>    
-        <div id="portfolio">Portfolio</div>
-        <div id="results-list"></div>
-        <div id="news">
-            <form id="news-form">
-                <input id="symbol" placeholder="Enter Symbol">
-                <button id="fetch-news-button">Fetch News</button>
-            </form>
-            <ul id="news-list"></ul>
-        </div>
-        <hr>
-        <div class="time-left">
-            <!-- <p>tvqftcxiwedbpjfxkixyqylbrjwvx3cjeoqmuvj8<span id="time"></span></p> -->
-        </div>
+          <li><button id="home-nav">Home</button></li>
+          <li><button id="trending-nav">Trending</button></li>
+          <li><button id="portfolio-nav">Portfolio</button></li>
+        </ul>
+      </div>
+      <div class="top-bar-right">
 
-        <footer>
-            &copy;2021 Trading News
-        </footer>
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js" integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
-        <script src="assets/js/script.js"></script>
+      </div>
+    </div>
+    <div>
+      <h1 class="header1">Trading News</h1>
+    </div>
+  </nav>
+  <div id="home">Home</div>
+  <div id="portfolio">
+    <!-- add symbol -->
+    <div>
+      <input id="new-stock" placeholder="Enter Symbol">
+      <!-- number of shares -->
+      <input id="number-shares" placeholder="Enter Number of Shares">
+      <button id="save-stock-button">Add Stock</button>
+    </div>
+    <!-- delete position -->
+    <!-- show cards -->
+    <div id="portfolio-cards"></div>
+  </div>
+  <div id="results-list"></div>
+  <div id="news">
+    <form id="news-form">
+      <input id="symbol" placeholder="Enter Symbol">
+      <button id="fetch-news-button">Fetch News</button>
+    </form>
+    <ul id="news-list"></ul>
+  </div>
+  <hr>
+  <div class="time-left">
+    <!-- <p>tvqftcxiwedbpjfxkixyqylbrjwvx3cjeoqmuvj8<span id="time"></span></p> -->
+  </div>
+
+  <footer>
+    &copy;2021 Trading News
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js"
+    integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
+  <script src="assets/js/script.js"></script>
 </body>
+
 </html>
