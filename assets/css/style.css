@@ -107,6 +107,7 @@ const stockImage = $(`<img class="stock-image"></img>`); */
     justify-content: space-between;
     width: 100%;
     background-color: grey;
+    min-height: 70px;
 }
 
 .card-header a {
