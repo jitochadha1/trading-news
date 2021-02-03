@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Trading News</title>
+  <title>Trading News - My Portfolio</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css"
     integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
@@ -20,10 +20,14 @@
     <div class="top-bar" id="responsive-menu">
       <div class="top-bar-left">
         <ul class="dropdown menu" data-dropdown-menu id="dropdown-menu">
-          <li><a href= "./crypto.html" id="crypto-nav">Crypto</a></li>
-          <li><a href= "./trending.html" id="trending-nav">Trending</a></li>
-          <li><a href= "./portfolio.html" id="portfolio-nav">Portfolio</a></li>
-          <li><a href= "./single-stock.html" id="single-stock-nav">Single-Stock</a></li>
+          <div class="grid-x align-spaced w-50">
+            <li><a href= "./crypto.html" id="crypto-nav">Crypto</a></li>
+            <li><a href= "./trending.html" id="trending-nav">Trending</a></li>
+          </div>
+          <div class="grid-x align-spaced w-50">
+            <li><a href= "./portfolio.html" id="portfolio-nav">Portfolio</a></li>
+            <li><a href= "./single-stock.html" id="single-stock-nav">Single-Stock</a></li>
+          </div>
         </ul>
       </div>
     </div>
@@ -40,9 +44,9 @@
   <div id="portfolio">
     <!-- add symbol -->
     <div id="position-setup">
-      <input id="new-stock" placeholder="Enter Symbol">
+      <input id="new-stock" list="all-tickers" placeholder="Enter Symbol">
       <!-- number of shares -->
-      <input id="number-shares" placeholder="Enter Number of Shares">
+      <input id="number-shares" placeholder="Number of Shares">
       <button id="save-stock-button">Add Stock</button>
     </div>
     <div id="portfolio-value-container">

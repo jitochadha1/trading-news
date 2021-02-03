@@ -254,14 +254,6 @@ footer {
   font-size: 18px;
 }
 
-@media screen and (max-width: 655px) {
-  #symbol, #fetch-news-button  {
-    width: 100%;
-    margin-left: 0;
-    margin-bottom: 5px;
-  }
-}
-
 .position-value-summary {
   display: flex;
   flex-direction: column;
@@ -275,7 +267,6 @@ footer {
 #position-setup input {
   font-size: 14px;
   padding: 3px;
-  width: 170px;
 }
 
 .delete-position {
@@ -316,4 +307,27 @@ footer {
   text-align: center;
   padding-top: 15px;
   font-weight: bold;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+nav a {
+  width: 130px;
+}
+
+@media screen and (max-width: 655px) {
+  #symbol, #fetch-news-button, #new-stock, #number-shares, #save-stock-button {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 5px;
+  }
+
+  #position-setup{
+    width: 100%;
+    padding: 40px;
+    text-align: center;
+    display: block;
+  }
 }
