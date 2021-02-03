@@ -20,8 +20,8 @@ function getTickerImages(tickers) {
         // .then(function(response) {
         //     return response.json();
         // })
-        // .then(response => response.json())
-        // .then(data => displayTickerImages(tickers, data.data));
+        .then(response => response.json())
+        .then(data => displayTickerImages(tickers, data.data));
 };
 
 function displayTickerImages(tickers, newsList) {
