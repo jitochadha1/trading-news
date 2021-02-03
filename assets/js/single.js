@@ -23,10 +23,8 @@ let getStock = function() {
     fetchStockQuote(stockSymbol);
     fetchIncomeStatement(stockSymbol);
     fetchBalanceSheet(stockSymbol);
+    fetchCashFLow(stockSymbol);
   } 
-  // else {
-  //   document.location.replace("./index.html");
-  // }
 };
 
 function displayHeaders(name, symbol) {
@@ -270,7 +268,6 @@ function prepareBalanceSheet(arr) {
     tableData.totalInvestments = ["Total Investments"]
     tableData.totalDebt = ["Total Debt"]
     tableData.netDebt = ["Net Debt"]
-    console.log(tableData);
   for (let i = 0; i < arr.length; i++) {
     tableData.date.push(arr[i].date);
     tableData.cashAndCashEquivalents.push(toComSep.format(arr[i].cashAndCashEquivalents));
@@ -340,6 +337,65 @@ function displayBalanceSheet(tableData) {
   $("#balance-sheet-div").append(tableEl);
 };
 // END BALANCE SHEET
+
+// CASH FLOW START
+function fetchCashFLow(stockSymbol) {
+  fetch(`https://financialmodelingprep.com/api/v3/cash-flow-statement/${stockSymbol}?limit=5&apikey=${fmpApiKey}`)
+    .then(response => response.json())
+    .then(data => prepareCashFlow(data));
+}
+
+function prepareCashFlow(arr) {
+  console.log(arr)
+  //clear table
+  $("#cash-flow-div").empty();
+  // create new arr for tableData
+  var tableData = {};
+    tableData.date = ["Date"];
+    tableData.cashAtBeginningOfPeriod = ["Cash at Beginning of Period"];
+    tableData.operatingCashFlow = ["Operating Cash Flow"];
+    tableData.capitalExpenditure = ["Capital Expenditure"];
+    tableData.freeCashFlow = ["Free Cash Flow"];
+    tableData.netCashUsedProvidedByFinancingActivities = ["Cash Flow from Financing"];
+    tableData.netChangeInCash = ["Net Change in Cash"];
+    tableData.cashAtEndOfPeriod = ["Cash at End of Period"];
+  for (let i = 0; i < arr.length; i++) {
+    tableData.date.push(arr[i].date);
+    tableData.cashAtBeginningOfPeriod.push(toComSep.format(arr[i].cashAtBeginningOfPeriod));
+    tableData.operatingCashFlow.push(toComSep.format(arr[i].operatingCashFlow));
+    tableData.capitalExpenditure.push(toComSep.format(arr[i].capitalExpenditure));
+    tableData.freeCashFlow.push(toComSep.format(arr[i].freeCashFlow));
+    tableData.netCashUsedProvidedByFinancingActivities.push(toComSep.format(arr[i].netCashUsedProvidedByFinancingActivities));
+    tableData.netChangeInCash.push(toComSep.format(arr[i].netChangeInCash));
+    tableData.cashAtEndOfPeriod.push(toComSep.format(arr[i].cashAtEndOfPeriod));
+  };
+  displayCashFlow(tableData);
+};
+
+function displayCashFlow(tableData) {
+  // create table and body
+  let tableEl = $("<table>").addClass("cell unstriped")
+  let tableBodyEl = $("<tbody>")
+  tableEl.append(tableBodyEl);
+
+  // append table data as a rows
+  for (const arr in tableData) {
+    var tableRowEl = $("<tr>");
+    for (let i = 0; i < tableData[arr].length; i++) {
+      var tdEl = $("<td>")
+      if(i === 0) {
+        tdEl.addClass("td-left")
+      } else {
+        tdEl.addClass("td-right")
+      }
+      tdEl.text(tableData[arr][i]);
+      tableRowEl.append(tdEl);
+    }
+    tableEl.append(tableRowEl);
+  }
+  $("#cash-flow-div").append(tableEl);
+};
+// END CASH FLOW
 
 // Handlers
 let formHandler = function(event) {
