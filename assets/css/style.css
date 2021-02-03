@@ -150,7 +150,7 @@ footer {
   overflow-x: hidden;
 }
 
-#income-div {
+.overflow-x-auto {
   overflow-x: auto;
 }
 
@@ -214,6 +214,11 @@ footer {
 
 #symbol {
   width: 455px;
+}
+
+.accordion-title{
+  font-size: 18px;
+  color: black;
 }
 
 @media screen and (max-width: 655px) {
