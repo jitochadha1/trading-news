@@ -24,9 +24,6 @@ let getStock = function() {
     fetchIncomeStatement(stockSymbol);
     fetchBalanceSheet(stockSymbol);
   } 
-  // else {
-  //   document.location.replace("./index.html");
-  // }
 };
 
 function displayHeaders(name, symbol) {
