@@ -1,11 +1,13 @@
-let portfolioTickers = [{
-    ticker: "aapl",
-    shares: "100",
-    companyName: "apple",
-    price: "200",
-    changesPercentage: "5"
-}];
-saveSymbolsToLocal();
+let portfolioTickers = [
+    // {
+//     // ticker: "aapl",
+//     // shares: "100",
+//     // companyName: "apple",
+//     // price: "200",
+//     // changesPercentage: "5"
+// }
+];
+
 initializePage();
 
 function getNews (tickers, items) {
@@ -56,6 +58,14 @@ function getTrending() {
         .then(data => displayActiveStockList(data.mostActiveStock));
 };
 
+function getPortfolioCompanyInfo(ticker) {
+    const fmpApiKey =  `790c2982fd01273e3a03a32d42eb3273`
+    return fetch(`https://financialmodelingprep.com/api/v3/quote/${ticker.toUpperCase()}?apikey=${fmpApiKey}`)
+        .then(response => response.json())
+        
+    
+}
+
 function displayActiveStockList(activeStockList) {
     let tickers = activeStockList.map(stock => stock.ticker);
     activeStockList.sort((stockA, stockB) => {
@@ -69,7 +79,7 @@ function displayActiveStockList(activeStockList) {
     })
     activeStockList.forEach(stock => displayStock(stock));
     getTickerImages(tickers);
-    console.log(activeStockList);
+    // console.log(activeStockList);
 };
 
 function displayStock(stock) {
@@ -199,11 +209,18 @@ function addPortfolioItem(portfolioItem) {
 function handleSaveStock() {
     const symbol = $("#new-stock").val();
     const shares = $("#number-shares").val();
-    let portfolioItem = {
-        ticker: symbol,
-        shares: shares
-    }
-    addPortfolioItem(portfolioItem)
+    getPortfolioCompanyInfo(symbol).then(data => {
+        console.log(data[0]);
+        let portfolioItem = {
+            ticker: symbol,
+            shares: shares,
+            companyName: data[0].name,
+            price: data[0].price,
+            changesPercentage: data[0].changesPercentage
+        }
+        addPortfolioItem(portfolioItem)
+    });
+    
 }
 
 // savings symbols to local storage
@@ -214,7 +231,7 @@ function saveSymbolsToLocal() {
 
 // load symbols from local storage
 function loadSymbolsFromLocal() {
-    portfolioTickers = JSON.parse(localStorage.getItem('portfolioTickers'));
+    localStoragePortfolioTickers = JSON.parse(localStorage.getItem('portfolioTickers'));
 }
 
 // delete a ticker
