@@ -1,199 +1,56 @@
-//initializePage();
+
+let resultsList = document.getElementById("results-list");
 
 
-//function getNews (tickers, items) {
-//     fetch(`https://stocknewsapi.com/api/v1?tickers=${tickers.join()}&items=${items}&token=tvqftcxiwedbpjfxkixyqylbrjwvx3cjeoqmuvj8`)
-//         .then(response => response.json())
-//         .then(data => displayNewsList(data.data));
-// };
-
-//Coin Gecko
-
-function getCoinInfo(id, symbol) {
-    fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false`)
+function getCoinInfo() {
+    fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=30&page=1&sparkline=false`)
     .then(function(response){
       return response.json();
     }).then(function(data) {
-      console.log(data);
+        displayActiveCrypto(data);
     })
 };
+
+
+function displayActiveCrypto(coins) {
+    console.log(coins);
+    for (let i = 0; i < coins.length; i++) {
+        let cardElement = document.createElement("div");
+        cardElement.classList = "card stock-card";
+        cardElement.setAttribute("id",coins[i].symbol );
+        let cardHeader = document.createElement("div");
+        cardHeader.classList = "card-divider card-header";
+        let cardBody = document.createElement("img");
+        cardBody.classList = "stock-image";
+        cardBody.setAttribute("src",coins[i].image);
+
+        cardElement.appendChild(cardHeader);
+        cardElement.appendChild(cardBody);
+        let coinName = document.createElement("div")
+        coinName.classList = "company-name";
+        coinName.innerHTML = `<span>${coins[i].name}</span><br><span>${coins[i].symbol}</span>`
+        cardHeader.appendChild(coinName);
+
+        let coinDetails = document.createElement("div");
+        coinDetails.classList = "stock-price";
+        coinDetails.innerHTML = `<span>${coins[i].current_price}</span><br><span>${coins[i].price_change_percentage_24h}</span>`
+        cardHeader.appendChild(coinDetails);
+        console.log(cardElement);
+
+        resultsList.appendChild(cardElement);
+
+
+
+
+
+
+
+        
+        
+    }
+
+
+
+};
+
 getCoinInfo();
-
-//crypto fetch api
-// function getCrypto (){
-// fetch("https://crypto-asset-market-data-unified-apis-for-professionals.p.rapidapi.com/api/v1/blockfacts/price?asset=BTC&denominator=USD", {
-// 	"method": "GET",
-// 	"headers": {
-// 		"x-api-secret": "BiXE5D7gpAW0Wr3iQoTKp8lwHcNwIyyuscYhIzdKYL6lm",
-// 		"x-api-key": "Vhcl75IoYr5JhVxiaYHArbQydrj0ax",
-// 		"x-rapidapi-key": "74205e6e04msh2de1a9798c2088fp1c0ea2jsnae615e91ebd0",
-// 		"x-rapidapi-host": "crypto-asset-market-data-unified-apis-for-professionals.p.rapidapi.com"
-// 	}
-// })
-// .then(response => {
-// 	console.log(response);
-// })
-// .catch(err => {
-// 	console.error(err);
-// });
-
-//crypto fetch api
-
-function getTickerImages(tickers) {
-    let items = 50;
-    fetch(`https://stocknewsapi.com/api/v1?tickers=${tickers.join()}&items=${items}&token=tvqftcxiwedbpjfxkixyqylbrjwvx3cjeoqmuvj8`)
-    
-        // .then(function(response) {
-        //     return response.json();
-        // })
-        // .then(response => response.json())
-        // .then(data => displayTickerImages(tickers, data.data));
-};
-
-function displayTickerImages(tickers, newsList) {
-    for (let ticker of tickers) {
-        let imageUrl = getTickerImageUrl(ticker, newsList);
-        displayTickerImage(ticker, imageUrl);
-    }
-}
-
-function getTickerImageUrl(ticker, newsList) {
-    const matchingStory = newsList.find(function (newsStory) {
-        return newsStory.tickers.includes(ticker);
-    });
-    if(matchingStory) {
-        return matchingStory.image_url;
-    
-    } else {
-        return getTickerImages([ticker]);
-    
-    }
-};
-
-function displayTickerImage(ticker, imageUrl) {
-    if(imageUrl === "") return;
-    $(`#${ticker} img`).attr("src", imageUrl)
-};
-
-function getTrending() {
-    const fmpApiKey =  `373886b34df66a9a6c72c04fa0d29dd8`
-    fetch(`https://financialmodelingprep.com/api/v3/stock/actives?apikey=${fmpApiKey}`)
-        .then(response => response.json())
-        .then(data => displayActiveStockList(data.mostActiveStock));
-};
-
-function displayActiveStockList(activeStockList) {
-    let tickers = activeStockList.map(stock => stock.ticker);
-    activeStockList.forEach(stock => displayStock(stock));
-    getTickerImages(tickers);
-};
-
-function displayStock(stock) {
-    let card = $(`<div id="${stock.ticker}"></div>`);
-    card.addClass("card stock-card");
-    card.click(() => handleStockClick(stock.ticker));
-
-    const divider = $(`<div class="card-divider card-header"></div>`);
-    const companyName = $(`<div class="company-name"> <span>${stock.companyName}</span> </br> <span class="stock-symbol"> ${stock.ticker}</span> </div>`);
-    const stockDetails = $(`<div class="stock-details"></div>`);
-    const stockPrice = $(`<span class="stock-price"> ${stock.price}</span>`);
-    let stockChangesPercentage; 
-    let percentChange = stock.changesPercentage.replace("%", "")
-    percentChange = percentChange.replace("(", "")
-    percentChange = percentChange.replace(")", "")
-    if(+percentChange > 0) {
-        stockChangesPercentage = $(`<span class="stock-changes-percentage positive-change"> ${stock.changesPercentage}</span>`);
-    } else {
-        stockChangesPercentage = $(`<span class="stock-changes-percentage negative-change"> ${stock.changesPercentage}</span>`);
-    };
-    const stockImage = $(`<img class="stock-image"></img>`);
-    divider.append(companyName);
-    stockDetails.append(stockPrice);
-    stockDetails.append(stockChangesPercentage);
-    divider.append(stockDetails);
-    card.append(divider);
-    card.append(stockImage);
-    $("#results-list").append(card);
-}
-
-function handleStockClick(ticker) {
-    // getNews(["gme", "tsla", "aapl"], 4);
-    getCoinInfo([ticker], 5);
-}
-
-function displayNewsList(newsList) {
-    clearNewsList();
-    newsList.forEach(newsStory => displayStory(newsStory));
-}
-
-function displayStory(newsStory) {
-    let listItem = $("<li></li>");
-    listItem.html(`<a target="_blank" href="${newsStory.news_url}">${newsStory.title}</a>`);
-    $("#news-list").append(listItem);
-}
-
-function handleFetchNewsSubmit(e) {
-    e.preventDefault();
-    let tickerInput = document.querySelector('#symbol');
-    getCoinInfo([tickerInput.value], 10);
-    tickerInput.value = "";
-
-}
-
-function clearNewsList() {
-    $("#news-list").empty();
-}
-
-function initializePage() {
-    $("#news-form").submit(handleFetchNewsSubmit);
-    $(document).foundation();
-    getTrending();
-    $("#home-nav").click(handleHomeClick);
-    $("#trending-nav").click(handleTrendingClick);
-    $("#portfolio-nav").click(handlePortfolioClick);
-}
-
-function hideHome() {
-    $("#home").css("display", "none");
-}
-
-function hideTrending() {
-    $("#results-list").css("display", "none");
-}
-
-function hidePortfolio() {
-    $("#portfolio").css("display", "none");
-}
-
-function showHome() {
-    $("#home").css("display", "flex");
-}
-
-function showTrending() {
-    $("#results-list").css("display", "flex");
-}
-
-function showPortfolio() {
-    $("#portfolio").css("display", "flex");
-}
-
-function hideAllPages() {
-    hideHome();
-    hideTrending();
-    hidePortfolio();
-}
-
-function handleHomeClick() {
-    hideAllPages();
-    showHome();
-}
-
-function handleTrendingClick() {
-    hideAllPages();
-    showTrending();
-}
-
-function handlePortfolioClick() {
-    hideAllPages();
-    showPortfolio();
-}
