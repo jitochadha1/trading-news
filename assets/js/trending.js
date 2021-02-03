@@ -2,19 +2,20 @@ const fmpApiKey =  `790c2982fd01273e3a03a32d42eb3273`
 initializePage();
 
 function getNews (tickers, items) {
-    fetch(`https://stocknewsapi.com/api/v1?tickers=${tickers.join()}&items=${items}&token=tvqftcxiwedbpjfxkixyqylbrjwvx3cjeoqmuvj8`)
+    fetch(`https://financialmodelingprep.com/api/v3/stock_news?tickers=${tickers.join()}&limit=${items}&apikey=${fmpApiKey}`)
         .then(response => response.json())
-        .then(data => displayNewsList(data.data));
+        .then(data => displayNewsList(data));
+        // .then(data => console.log(data))
 };
 
 function getTickerImages(tickers) {
-    let items = 50;
-    fetch(`https://stocknewsapi.com/api/v1?tickers=${tickers.join()}&items=${items}&token=tvqftcxiwedbpjfxkixyqylbrjwvx3cjeoqmuvj8`)
+    let items = 600;
+    fetch(`https://financialmodelingprep.com/api/v3/stock_news?tickers=${tickers.join()}&limit=${items}&apikey=${fmpApiKey}`)
         // .then(function(response) {
         //     return response.json();
         // })
         .then(response => response.json())
-        .then(data => displayTickerImages(tickers, data.data));
+        .then(data => displayTickerImages(tickers, data));
 };
 
 function displayTickerImages(tickers, newsList) {
@@ -26,10 +27,10 @@ function displayTickerImages(tickers, newsList) {
 
 function getTickerImageUrl(ticker, newsList) {
     const matchingStory = newsList.find(function (newsStory) {
-        return newsStory.tickers.includes(ticker);
+        return newsStory.symbol === ticker;
     });
     if(matchingStory) {
-        return matchingStory.image_url;
+        return matchingStory.image;
     
     } else {
         return getTickerImages([ticker]);
@@ -40,6 +41,7 @@ function getTickerImageUrl(ticker, newsList) {
 function displayTickerImage(ticker, imageUrl) {
     if(imageUrl === "") return;
     $(`#${ticker} img`).attr("src", imageUrl)
+    // console.log(imageUrl);
 };
 
 function getTrending() {
@@ -109,14 +111,14 @@ function displayNewsList(newsList) {
 
 function displayStory(newsStory) {
     let listItem = $("<li></li>");
-    listItem.html(`<a target="_blank" href="${newsStory.news_url}">${newsStory.title}</a>`);
+    listItem.html(`<a target="_blank" href="${newsStory.url}">${newsStory.title}</a>`);
     $("#news-list").append(listItem);
 }
 
 function handleFetchNewsSubmit(e) {
     e.preventDefault();
     let tickerInput = document.querySelector('#symbol');
-    getNews([tickerInput.value], 10);
+    getNews([tickerInput.value.toUpperCase()], 10);
     tickerInput.value = "";
 
 }

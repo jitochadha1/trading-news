@@ -1,4 +1,4 @@
-let fmpApiKey = `373886b34df66a9a6c72c04fa0d29dd8`
+let fmpApiKey = `790c2982fd01273e3a03a32d42eb3273`
 let companyNameEl = document.querySelector("#company-name");
 let stockSymbolEl = document.querySelector("#stock-symbol");
 let formEl = document.querySelector("#single-stock-form");

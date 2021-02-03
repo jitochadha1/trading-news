@@ -11,6 +11,7 @@
     integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/font-awesome-4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
@@ -38,17 +39,21 @@
 
   <div id="portfolio">
     <!-- add symbol -->
-    <div>
+    <div id="position-setup">
       <input id="new-stock" placeholder="Enter Symbol">
       <!-- number of shares -->
       <input id="number-shares" placeholder="Enter Number of Shares">
       <button id="save-stock-button">Add Stock</button>
     </div>
+    <div id="portfolio-value-container">
+      <span>Portfolio Balance</span>
+      <span id="portfolio-value"></span>
+    </div>
     <!-- delete position -->
     <!-- show cards -->
     <div id="portfolio-cards"></div>
   </div>
-  <div id="results-list"></div>
+  
   <div id="news">
     <form id="news-form" class="autocomplete-form">
       <input id="symbol" list="all-tickers" placeholder="Enter Symbol">
