@@ -17,7 +17,7 @@
 </head>
 
 <body>
-  <header>
+  <!-- <header>
     <h1 id="company-name" class="single-h1"></h1>
     <h2 id="stock-symbol" class="single-h2"></h2>
        
@@ -26,7 +26,28 @@
         <a href="./index.html" class="button">Trending</a>
         <a href="#" class="button">Portfolio</a>
     </nav>
+  </header> -->
+
+  <nav>
+    <div class="top-bar" id="responsive-menu">
+      <div class="top-bar-left">
+        <ul class="dropdown menu" data-dropdown-menu id="dropdown-menu">
+          <li><a href= "./crypto.html" id="crypto-nav">Crypto</a></li>
+          <li><a href= "./index.html" id="trending-nav">Trending</a></li>
+          <li><a href= "./portfolio.html" id="portfolio-nav">Portfolio</a></li>
+          <li><a href= "./single-stock.html" id="single-stock-nav">Single-Stock</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header>
+    <h1 id="company-name" class="header1">Trading News</h1>
   </header>
+
+  <div>
+    <h2 id="stock-symbol" class="single-h2">Search for a Stock</h2>
+  </div>
   
   <form id="single-stock-form" class="autocomplete-form">
     <input id="symbol" list="all-tickers" placeholder="Enter Stock Symbol">

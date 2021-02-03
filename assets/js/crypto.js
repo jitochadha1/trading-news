@@ -33,7 +33,7 @@ function displayActiveCrypto(coins) {
 
         let coinDetails = document.createElement("div");
         coinDetails.classList = "stock-price";
-        coinDetails.innerHTML = `<span>${coins[i].current_price}</span><br><span>${coins[i].price_change_percentage_24h}</span>`
+        coinDetails.innerHTML = `<span class="stock-price">${coins[i].current_price}</span><br><span>${coins[i].price_change_percentage_24h}</span>`
         cardHeader.appendChild(coinDetails);
         console.log(cardElement);
 

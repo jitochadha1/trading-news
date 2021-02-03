@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Trading News - Crypto</title>
+  <title>Trading News</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css"
     integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
@@ -33,15 +33,27 @@
   </header>
 
   <div>
-    <h2 class="single-h2">Hottest Coins</h1>
+    <h2 class="single-h2">My Portfolio</h1>
   </div>
-  
+
+  <div id="portfolio">
+    <!-- add symbol -->
+    <div>
+      <input id="new-stock" placeholder="Enter Symbol">
+      <!-- number of shares -->
+      <input id="number-shares" placeholder="Enter Number of Shares">
+      <button id="save-stock-button">Add Stock</button>
+    </div>
+    <!-- delete position -->
+    <!-- show cards -->
+    <div id="portfolio-cards"></div>
+  </div>
   <div id="results-list"></div>
   <div id="news">
-    <div id="input">
-      <input id="symbol" placeholder="Enter Symbol">
+    <form id="news-form" class="autocomplete-form">
+      <input id="symbol" list="all-tickers" placeholder="Enter Symbol">
       <button id="fetch-news-button">Fetch News</button>
-    </div>
+    </form>
     <ul id="news-list"></ul>
   </div>
   <hr>
@@ -55,7 +67,8 @@
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js"
     integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
-  <script src="assets\js\crypto.js"></script>
+  <script src="./assets/js/search-form-complete.js"></script>
+  <script src="assets/js/script.js"></script>
 </body>
 
 </html>
