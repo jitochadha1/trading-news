@@ -1,4 +1,4 @@
-let fmpApiKey = `790c2982fd01273e3a03a32d42eb3273`
+let fmpApiKey = `373886b34df66a9a6c72c04fa0d29dd8`
 let companyNameEl = document.querySelector("#company-name");
 let stockSymbolEl = document.querySelector("#stock-symbol");
 let formEl = document.querySelector("#single-stock-form");
@@ -7,7 +7,7 @@ let formEl = document.querySelector("#single-stock-form");
 let toComSep = new Intl.NumberFormat('en-US');
 let toUSD = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 
-
+// get user inputs and load to url
 let getStock = function() {
   let qArr = document.location.search.substring(1).split("&");
   let qObj = {}
@@ -22,9 +22,11 @@ let getStock = function() {
   if(stockSymbol) {
     fetchStockQuote(stockSymbol);
     fetchIncomeStatement(stockSymbol);
-  } else {
-    document.location.replace("./index.html");
-  }
+    fetchBalanceSheet(stockSymbol);
+  } 
+  // else {
+  //   document.location.replace("./index.html");
+  // }
 };
 
 function displayHeaders(name, symbol) {
@@ -32,6 +34,7 @@ function displayHeaders(name, symbol) {
   stockSymbolEl.textContent = symbol;
 }
 
+// PRICE TABLE START
 function fetchStockQuote(stockSymbol) {
   fetch(`https://financialmodelingprep.com/api/v3/quote/${stockSymbol}?apikey=${fmpApiKey}`)
     .then(response => response.json())
@@ -39,7 +42,7 @@ function fetchStockQuote(stockSymbol) {
 };
 
 function preparePriceTable(data) {
-  // clear tables already there
+  // clear table
   $("#price-div").empty();
 
   // change headers
@@ -128,7 +131,9 @@ function displayPriceTable(tableData) {
 
   $("#price-div").append(tableEl);
 };
+// END PRICE TABLE
 
+// INCOME STATEMENT START
 function fetchIncomeStatement(stockSymbol) {
   fetch(`https://financialmodelingprep.com/api/v3/income-statement/${stockSymbol}?limit=5&apikey=${fmpApiKey}`)
     .then(response => response.json())
@@ -138,7 +143,6 @@ function fetchIncomeStatement(stockSymbol) {
 function prepareIncomeStatement(arr) {
   // clear tables already there
   $("#income-div").empty();
-
   var tableData = {}
     tableData.date = ["Date"];
     tableData.revenue = ["Sales"];
@@ -188,7 +192,6 @@ function prepareIncomeStatement(arr) {
   displayIncomeStatement(tableData);
 };
 
-// WIP
 function displayIncomeStatement(tableData) {
   // create table and body
   let tableEl = $("<table>").addClass("cell unstriped")
@@ -205,16 +208,140 @@ function displayIncomeStatement(tableData) {
       } else {
         tdEl.addClass("td-right")
       }
-
       tdEl.text(tableData[arr][i]);
-      console.log(tableData[arr][i]);
       tableRowEl.append(tdEl);
     }
     tableEl.append(tableRowEl);
   }
   $("#income-div").append(tableEl);
 };
+// END INCOME STATEMENT
 
+// BALANCE SHEET START
+function fetchBalanceSheet(stockSymbol) {
+  let periods = 5
+  fetch(`https://financialmodelingprep.com/api/v3/balance-sheet-statement/${stockSymbol}?limit=${periods}&apikey=${fmpApiKey}`)
+    .then(response => response.json())
+    .then(data => prepareBalanceSheet(data));
+}
+
+function prepareBalanceSheet(arr) {
+  //clear table
+  $("#balance-sheet-div").empty();
+  // create new arr for tableData
+  var tableData = {}
+    tableData.date = ["Date"];
+    tableData.cashAndCashEquivalents = ["Cash & Cash Equivalents"]
+    tableData.shortTermInvestments = ["Short Term Investments"]
+    tableData.cashAndShortTermInvestments = ["Cash & Short Term Investments"]
+    tableData.netReceivables = ["Net Receivables"]
+    tableData.inventory = ["Inventory"]
+    tableData.otherCurrentAssets = ["Other Current Assets"]
+    tableData.totalCurrentAssets = ["Total Current Assets"]
+    tableData.propertyPlantEquipmentNet = ["PP&E Net"]
+    tableData.goodwill = ["Goodwill"]
+    tableData.intangibleAssets = ["Intangible Assets"]
+    tableData.goodwillAndIntangibleAssets = ["Goodwill & Intangible Assets"]
+    tableData.longTermInvestments = ["Long Term Investments"]
+    tableData.taxAssets = ["Tax Assets"]
+    tableData.otherNonCurrentAssets = ["Other Non Current Assets"]
+    tableData.totalNonCurrentAssets = ["Total Non Current Assets"]
+    tableData.otherAssets = ["Other Assets"]
+    tableData.totalAssets = ["Total Assets"]
+    tableData.accountPayables = ["Accounts Payable"]
+    tableData.shortTermDebt = ["Short Term Debt"]
+    tableData.taxPayables = ["Tax Payable"]
+    tableData.deferredRevenue = ["Deferred Revenue"]
+    tableData.otherCurrentLiabilities = ["Other Current Liabilities"]
+    tableData.totalCurrentLiabilities = ["Total Current Liabilities"]
+    tableData.longTermDebt = ["Long Term Debt"]
+    tableData.deferredRevenueNonCurrent = ["Non-Current Deferred Revenue"]
+    tableData.deferredTaxLiabilitiesNonCurrent = ["Non-Current Deferred Tax Liabilities"]
+    tableData.otherNonCurrentLiabilities = ["Other Non Current Liabilities"]
+    tableData.totalNonCurrentLiabilities = ["Total Non Current Liabilities"]
+    tableData.otherLiabilities = ["Other Liabilities"]
+    tableData.totalLiabilities = ["Total Liabilities"]
+    tableData.commonStock = ["Common Stock"]
+    tableData.retainedEarnings = ["Retained Earnings"]
+    tableData.accumulatedOtherComprehensiveIncomeLoss = ["Accumulated Other Comprehensive Income (Loss)"]
+    tableData.othertotalStockholdersEquity = ["Other Total Stockholders Equity"]
+    tableData.totalStockholdersEquity = ["Total Stockholders Equity"]
+    tableData.totalLiabilitiesAndStockholdersEquity = ["Total Liabilities And Stockholders Equity"]
+    tableData.totalInvestments = ["Total Investments"]
+    tableData.totalDebt = ["Total Debt"]
+    tableData.netDebt = ["Net Debt"]
+    console.log(tableData);
+  for (let i = 0; i < arr.length; i++) {
+    tableData.date.push(arr[i].date);
+    tableData.cashAndCashEquivalents.push(toComSep.format(arr[i].cashAndCashEquivalents));
+    tableData.shortTermInvestments.push(toComSep.format(arr[i].shortTermInvestments));
+    tableData.cashAndShortTermInvestments.push(toComSep.format(arr[i].cashAndShortTermInvestments));
+    tableData.netReceivables.push(toComSep.format(arr[i].netReceivables));
+    tableData.inventory.push(toComSep.format(arr[i].inventory));
+    tableData.otherCurrentAssets.push(toComSep.format(arr[i].otherCurrentAssets));
+    tableData.totalCurrentAssets.push(toComSep.format(arr[i].totalCurrentAssets));
+    tableData.propertyPlantEquipmentNet.push(toComSep.format(arr[i].propertyPlantEquipmentNet));
+    tableData.goodwill.push(toComSep.format(arr[i].goodwill));
+    tableData.intangibleAssets.push(toComSep.format(arr[i].intangibleAssets));
+    tableData.goodwillAndIntangibleAssets.push(toComSep.format(arr[i].goodwillAndIntangibleAssets));
+    tableData.longTermInvestments.push(toComSep.format(arr[i].longTermInvestments));
+    tableData.taxAssets.push(toComSep.format(arr[i].taxAssets));
+    tableData.otherNonCurrentAssets.push(toComSep.format(arr[i].otherNonCurrentAssets));
+    tableData.totalNonCurrentAssets.push(toComSep.format(arr[i].totalNonCurrentAssets));
+    tableData.otherAssets.push(toComSep.format(arr[i].otherAssets));
+    tableData.totalAssets.push(toComSep.format(arr[i].totalAssets));
+    tableData.accountPayables.push(toComSep.format(arr[i].accountPayables));
+    tableData.shortTermDebt.push(toComSep.format(arr[i].shortTermDebt));
+    tableData.taxPayables.push(toComSep.format(arr[i].taxPayables));
+    tableData.deferredRevenue.push(toComSep.format(arr[i].deferredRevenue));
+    tableData.otherCurrentLiabilities.push(toComSep.format(arr[i].otherCurrentLiabilities));
+    tableData.totalCurrentLiabilities.push(toComSep.format(arr[i].totalCurrentLiabilities));
+    tableData.longTermDebt.push(toComSep.format(arr[i].longTermDebt));
+    tableData.deferredRevenueNonCurrent.push(toComSep.format(arr[i].deferredRevenueNonCurrent));
+    tableData.deferredTaxLiabilitiesNonCurrent.push(toComSep.format(arr[i].deferredTaxLiabilitiesNonCurrent));
+    tableData.otherNonCurrentLiabilities.push(toComSep.format(arr[i].otherNonCurrentLiabilities));
+    tableData.totalNonCurrentLiabilities.push(toComSep.format(arr[i].totalNonCurrentLiabilities));
+    tableData.otherLiabilities.push(toComSep.format(arr[i].otherLiabilities));
+    tableData.totalLiabilities.push(toComSep.format(arr[i].totalLiabilities));
+    tableData.commonStock.push(toComSep.format(arr[i].commonStock));
+    tableData.retainedEarnings.push(toComSep.format(arr[i].retainedEarnings));
+    tableData.accumulatedOtherComprehensiveIncomeLoss.push(toComSep.format(arr[i].accumulatedOtherComprehensiveIncomeLoss));
+    tableData.othertotalStockholdersEquity.push(toComSep.format(arr[i].othertotalStockholdersEquity));
+    tableData.totalStockholdersEquity.push(toComSep.format(arr[i].totalStockholdersEquity));
+    tableData.totalLiabilitiesAndStockholdersEquity.push(toComSep.format(arr[i].totalLiabilitiesAndStockholdersEquity));
+    tableData.totalInvestments.push(toComSep.format(arr[i].totalInvestments));
+    tableData.totalDebt.push(toComSep.format(arr[i].totalDebt));
+    tableData.netDebt.push(toComSep.format(arr[i].netDebt));
+  }
+  displayBalanceSheet(tableData);
+};
+
+function displayBalanceSheet(tableData) {
+  // create table and body
+  let tableEl = $("<table>").addClass("cell unstriped")
+  let tableBodyEl = $("<tbody>")
+  tableEl.append(tableBodyEl);
+
+  // append table data as a rows
+  for (const arr in tableData) {
+    var tableRowEl = $("<tr>");
+    for (let i = 0; i < tableData[arr].length; i++) {
+      var tdEl = $("<td>")
+      if(i === 0) {
+        tdEl.addClass("td-left")
+      } else {
+        tdEl.addClass("td-right")
+      }
+      tdEl.text(tableData[arr][i]);
+      tableRowEl.append(tdEl);
+    }
+    tableEl.append(tableRowEl);
+  }
+  $("#balance-sheet-div").append(tableEl);
+};
+// END BALANCE SHEET
+
+// Handlers
 let formHandler = function(event) {
   event.preventDefault();
   let symbolEl = event.target.querySelector("#symbol")
@@ -225,5 +352,5 @@ let formHandler = function(event) {
 // Event Listeners
 formEl.addEventListener("submit",formHandler)
 
-// ON LOAD
+// On Load
 getStock();
