@@ -2,6 +2,7 @@ let fmpApiKey = `790c2982fd01273e3a03a32d42eb3273`
 let companyNameEl = document.querySelector("#company-name");
 let stockSymbolEl = document.querySelector("#stock-symbol");
 let formEl = document.querySelector("#single-stock-form");
+let accordionEl = document.querySelector("#accordion-el")
 
 // format currency data with toUSD.format(num)
 let toComSep = new Intl.NumberFormat('en-US');
@@ -18,8 +19,9 @@ let getStock = function() {
 
   // let companyName = qObj.name;
   // ^ not using anymore
-  let stockSymbol = qObj.symbol;
+  let stockSymbol = qObj.symbol.toUpperCase();
   if(stockSymbol) {
+    $(accordionEl).removeClass("d-none");
     fetchStockQuote(stockSymbol);
     fetchIncomeStatement(stockSymbol);
     fetchBalanceSheet(stockSymbol);
@@ -139,8 +141,14 @@ function fetchIncomeStatement(stockSymbol) {
 }
 
 function prepareIncomeStatement(arr) {
-  // clear tables already there
+  console.log(arr)
+  if(arr.length === 0) {
+    $("#income-li").addClass("d-none");
+    return;
+  };
+  // clear tables already there hide li if empty
   $("#income-div").empty();
+  $("#income-li").removeClass("d-none");
   var tableData = {}
     tableData.date = ["Date"];
     tableData.revenue = ["Sales"];
@@ -224,9 +232,13 @@ function fetchBalanceSheet(stockSymbol) {
 }
 
 function prepareBalanceSheet(arr) {
-  //clear table
+  if(arr.length === 0) {
+    $("#balance-sheet-li").addClass("d-none");
+    return false;
+  };
+  // clear tables already there hide li if empty
   $("#balance-sheet-div").empty();
-  // create new arr for tableData
+  $("#balance-sheet-li").removeClass("d-none");
   var tableData = {}
     tableData.date = ["Date"];
     tableData.cashAndCashEquivalents = ["Cash & Cash Equivalents"]
@@ -346,10 +358,13 @@ function fetchCashFLow(stockSymbol) {
 }
 
 function prepareCashFlow(arr) {
-  console.log(arr)
-  //clear table
+  if(arr.length === 0) {
+    $("#cash-flow-li").addClass("d-none");
+    return false;
+  };
+  // clear tables already there hide li if empty
   $("#cash-flow-div").empty();
-  // create new arr for tableData
+  $("#cash-flow-li").removeClass("d-none");
   var tableData = {};
     tableData.date = ["Date"];
     tableData.cashAtBeginningOfPeriod = ["Cash at Beginning of Period"];

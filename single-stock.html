@@ -27,7 +27,7 @@
           </div>
           <div class="grid-x align-spaced w-50">
             <li><a href= "./portfolio.html" id="portfolio-nav">Portfolio</a></li>
-            <li><a href= "./single-stock.html" id="single-stock-nav">Single-Stock</a></li>
+            <li><a href= "#" id="single-stock-nav">Single-Stock</a></li>
           </div>
         </ul>
       </div>
@@ -48,9 +48,9 @@
   </form>
   
   <main class = "grid-container">
-    <ul class="accordion" data-accordion>
+    <ul class="accordion d-none" id="accordion-el" data-accordion>
       <li class="accordion-item is-active" data-accordion-item>
-        <a href="#deeplink1" class="accordion-title">Stock Price Details</a>
+        <a href="#deeplink1" class="accordion-title">Price Details</a>
         <div class="accordion-content" data-tab-content id="deeplink1">
           <div class="grid-x grid-margin-x overflow-x-auto" id="price-div">
             <!-- Load Price Data Here -->
@@ -58,7 +58,7 @@
         </div>
       </li>
 
-      <li class="accordion-item" data-accordion-item>
+      <li class="accordion-item" id="income-li" data-accordion-item>
         <a href="#deeplink2" class="accordion-title">Annual Income Statement</a>
         <div class="accordion-content" data-tab-content id="deeplink2">
           <div class="grid-x grid-margin-x overflow-x-auto" id="income-div">
@@ -67,7 +67,7 @@
         </div>
       </li>
 
-      <li class="accordion-item" data-accordion-item>
+      <li class="accordion-item" id="balance-sheet-li" data-accordion-item>
         <a href="#deeplink2" class="accordion-title">Annual Balance Sheet</a>
         <div class="accordion-content" data-tab-content id="deeplink2">
           <div class="grid-x grid-margin-x overflow-x-auto" id="balance-sheet-div">
@@ -76,7 +76,7 @@
         </div>
       </li>
 
-      <li class="accordion-item" data-accordion-item>
+      <li class="accordion-item" id="cash-flow-li" data-accordion-item>
         <a href="#deeplink2" class="accordion-title">Annual Cash Flow</a>
         <div class="accordion-content" data-tab-content id="deeplink2">
           <div class="grid-x grid-margin-x overflow-x-auto" id="cash-flow-div">
