@@ -319,6 +319,10 @@ nav a {
   text-align: center;
 }
 
+.d-none {
+  display: none;
+}
+
 @media screen and (max-width: 655px) {
   #symbol, #fetch-news-button, #new-stock, #number-shares, #save-stock-button {
     width: 100%;
