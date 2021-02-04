@@ -241,6 +241,12 @@ footer {
     color: blue;
   }
 
+  .disclaimer-body{
+    margin:100px;
+    text-align:left;
+
+  }
+
 #news-form {
   width: 100%;
   padding: 40px;
